@@ -40,7 +40,7 @@ def ipv4addr(ip):
                 return 'This is not a valid IP v4 address.'
       
 def subnetting(subnet):
-    'This determines if a given subnetmask is valid.'
+    #This determines if a given subnetmask is valid.
     subnetlist = subnet.split('.')
     num=''
     for octet in subnetlist:
@@ -64,23 +64,23 @@ def subnetting(subnet):
         return 'This is not a valid subnet mask.'                            
     
 def network_id(ip, cidr):
-    'This returns the subnet id when given the ip address and the cidr notation.'
+    #This returns the subnet id when given the ip address and the cidr notation.
     x = ip + '/' + cidr
     global net_id
     net_id = ipaddress.ip_network(x, strict=False)
     return 'Your subnet id is ' + str(net_id) + '.'
 
 def hostrange(ip, net_id):
-    "This is to return the host ip address range for the ip address and network id provided."
+    #This is to return the host ip address range for the ip address and network id provided.
     global hostrng
     hostrng = []
     testfile = open('testfile.txt', "w")
     for ip in ipaddress.ip_network(net_id):
         hostrng.append(str(ip))
-    testfile.write('Here are your available hosts: '+ str(hostrng[1:-1]))
+    iplist.write('Here are your available hosts: '+ str(hostrng[1:-1]))
     return 'You have '+ str(len(hostrng[1:-1])) +' host ip addresses available on this subnet. \nThe first useable host ip address is ' + hostrng[1] + '. \nThe last useable host ip address is ' + hostrng[-2] + '. \nYour broadcast IP address is ' + str(hostrng[-1]) + '.'
 
-ip = input('What is your IP v4 address? ')
+ip=input('What is your IP v4 address? ')
 subnet=input('What is your subnet mask? ')
 print(ipv4addr(ip))
 print(subnetting(subnet)) 
