@@ -40,7 +40,8 @@ def ipv4addr(ip):
                 return 'This is not a valid IP v4 address.'
       
 def subnetting(subnet):
-    #This determines if a given subnetmask is valid.
+    #This function determines if the subnet mask is valid.
+    subnetcheck = [0,128,192,224,240,248,252,254,255]
     subnetlist = subnet.split('.')
     num=''
     for octet in subnetlist:
@@ -49,10 +50,10 @@ def subnetting(subnet):
     global cidr 
     cidr= num.count('1')
 
-    if subnetlist[0] =='255':
-        if subnetlist[1] == '0' or subnetlist[1] =='128' or subnetlist[1]=='192' or subnetlist[1]=='224' or subnetlist[1] == '240' or subnetlist[1] =='248' or subnetlist[1]=='252' or subnetlist[1] =='254' or subnetlist[1] =='255':
-            if subnetlist[2] == '0' or subnetlist[2] =='128' or subnetlist[2]=='192' or subnetlist[2]=='224' or subnetlist[2] == '240' or subnetlist[2] =='248' or subnetlist[2]=='252' or subnetlist[2] =='254' or subnetlist[2] =='255':
-                if subnetlist[3] == '0' or subnetlist[3] =='128' or subnetlist[3]=='192' or subnetlist[3]=='224' or subnetlist[3] == '240' or subnetlist[3] =='248' or subnetlist[3]=='252' or subnetlist[3] =='254' or subnetlist[3] =='255':
+    if int(subnetlist[0]) == 255:
+        if int(subnetlist[1]) in subnetcheck:
+            if int(subnetlist[2]) in subnetcheck:
+                if int(subnetlist[3]) in subnetcheck:
                     return 'Your CIDR notation is /' + str(cidr) + '.'
                 else:
                     return 'This is not a valid subnet mask.'
