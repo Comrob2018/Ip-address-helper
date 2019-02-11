@@ -89,8 +89,8 @@ def hostrange(ip, net_id):
     iplist.write('Here are your available hosts: '+ str(hostrng[1:-1]))
     return 'There are '+ str(len(hostrng[1:-1])) +' host ip addresses available on this subnet. \nThe first useable host ip address is ' + hostrng[1] + '. \nThe last useable host ip address is ' + hostrng[-2] + '. \nYour broadcast IP address is ' + str(hostrng[-1]) + '.'
 
-ip=raw_input('What is your IP v4 address? ')
-subnet=raw_input('What is your subnet mask? ')
+ip=input('What is your IP v4 address? ')
+subnet=input('What is your subnet mask? ')
 print(ipv4addr(ip))
 print(subnetting(subnet))
 print(network_id(ip, str(cidr)))
