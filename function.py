@@ -2,9 +2,9 @@ import ipaddress
 
 '''
 This script takes user input for Ip v4 address and subnet mask. 
-The provided input then returns information for the class, available hosts in subnet and subnet id.
+The provided input then returns information for the class, available hosts in subnet, 
+subnet id, and CIDR notation.
 It also checks the ip address and subnet mask for validity.
-It will also provide to the user their CIDR notation along with their 
 '''
 
 def ipv4addr(ip):
@@ -14,10 +14,11 @@ def ipv4addr(ip):
     address provided.
     '''
     classA= ' is a Class A IP v4 address. Class A private address range is 10.0.0.0 to 10.255.255.255.'
-    classB= ' is a Class B IP v4 address. Class B private address range is 172.16.0.0 to 172.31.255.255. Additionally, there is the APIPA address range which is 169.254.0.1 through 169.254.255.254. This is for systems that are configured for DHCP without a server.'
+    classB= ' is a Class B IP v4 address. Class B private address range is 172.16.0.0 to 172.31.255.255. Additionally, there is the APIPA address range which is 169.254.0.1 through 169.254.255.254.'
     classC= ' is a Class C IP v4 address. Class C private address range is 192.168.0.0 to 192.168.255.255.'
     classD= ' is a Class D IP v4 address. These addresses are used for multicast traffic and not available for hosts.'
     classE= ' is a Class E IP v4 address.These addresses are reserved for future use and are not available for private or public use.'
+    
     iplst = ip.split('.')
     for x in iplst:
         realip = '.'.join(iplst)
@@ -27,6 +28,7 @@ def ipv4addr(ip):
                 break
             except ValueError:
                 return 'This is not a valid IP v4 address.'
+               
     for x in iplst:
         if int(x) in range(0,255):
             if len(x) < 4:
@@ -42,10 +44,11 @@ def ipv4addr(ip):
                     return ip + classE
             else:
                 return 'This is not a valid IP v4 address.'
+            
 
 def subnetting(subnet):
     #This function determines if the subnet mask is valid.
-    subnetcheck = [0,128,192,224,240,248,252,254,255]
+    subnetcheck = ['0','128','192','224','240','248','252','254','255']
     subnetlist = subnet.split('.')
     num=''
     for octet in subnetlist:
@@ -53,10 +56,10 @@ def subnetting(subnet):
         num +=str(x[2::1])
     global cidr
     cidr= num.count('1')
-    if int(subnetlist[0]) == 255:
-        if int(subnetlist[1]) in subnetcheck:
-            if int(subnetlist[2]) in subnetcheck:
-                if int(subnetlist[3]) in subnetcheck:
+    if subnetlist[0] == '255':
+        if subnetlist[1] in subnetcheck:
+            if subnetlist[2] in subnetcheck:
+                if subnetlist[3] in subnetcheck:
                     return 'Your CIDR notation is /' + str(cidr) + '.'
                 else:
                     return 'This is not a valid subnet mask.'
@@ -66,6 +69,7 @@ def subnetting(subnet):
             return 'This is not a valid subnet mask.'
     else:
         return 'This is not a valid subnet mask.'
+
 
 def network_id(ip, cidr):
     #This returns the subnet id when given the ip address and the cidr notation.
@@ -85,8 +89,8 @@ def hostrange(ip, net_id):
     iplist.write('Here are your available hosts: '+ str(hostrng[1:-1]))
     return 'There are '+ str(len(hostrng[1:-1])) +' host ip addresses available on this subnet. \nThe first useable host ip address is ' + hostrng[1] + '. \nThe last useable host ip address is ' + hostrng[-2] + '. \nYour broadcast IP address is ' + str(hostrng[-1]) + '.'
 
-ip=input('What is your IP v4 address? ')
-subnet=input('What is your subnet mask? ')
+ip=raw_input('What is your IP v4 address? ')
+subnet=raw_input('What is your subnet mask? ')
 print(ipv4addr(ip))
 print(subnetting(subnet))
 print(network_id(ip, str(cidr)))
