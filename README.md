@@ -1,3 +1,2 @@
-# Ip-address-helper
-Ip address function for python3
-Updated some of the functionality and readability.
+## Ip-address-helper
+#Ip address helper function for python3.
